@@ -9,7 +9,7 @@ import {
   Form
 } from "./Style";
 import { Link } from "react-router-dom";
-import App from "../App.css";
+import "../App.css";
 import firebase from "../../firebase";
 import md5 from "md5";
 // Styled components
