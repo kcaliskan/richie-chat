@@ -7,25 +7,32 @@ export const Container = styled.div`
   text-align: center;
 `;
 
-export const Logo = styled.img`
-  margin: 0 auto;
-  width: 180px;
+export const Img = styled.img`
+  width: ${props => (props.imgStyles ? props.imgStyles.main.width : "")};
+  margin: ${props => (props.imgStyles ? props.imgStyles.main.margin : "")};
+  margin-top: ${props =>
+    props.imgStyles ? props.imgStyles.main.marginTop : ""};
 `;
 
 export const Form = styled.form``;
 
 export const Div = styled.div`
   text-decoration: none;
-  margin: ${props => props.divStyles.main.margin || ""};
-  width: ${props => props.divStyles.main.width || ""};
-  background-color: #${props => props.divStyles.main.background || "FFF"};
-  text-align: ${props => props.divStyles.main.textAlign || ""};
-  padding: ${props => props.divStyles.main.padding || ""};
-  border-radius: ${props => props.divStyles.main.borderRadius || ""};
-  border: ${props => props.divStyles.main.border || ""};
-  color: #${props => props.divStyles.main.textColor || ""};
-  font-size: ${props => props.divStyles.main.fontSize || ""};
-  font-weight: ${props => props.divStyles.main.fontWeight || ""};
+  margin: ${props => (props.divStyles ? props.divStyles.main.margin : "")};
+  margin-bottom: ${props =>
+    props.divStyles ? props.divStyles.main.marginBottom : ""};
+  width: ${props => (props.divStyles ? props.divStyles.main.width : "")};
+  background-color: #${props => (props.divStyles ? props.divStyles.main.background : "")};
+  text-align: ${props =>
+    props.divStyles ? props.divStyles.main.textAlign : ""};
+  padding: ${props => (props.divStyles ? props.divStyles.main.padding : "")};
+  border-radius: ${props =>
+    props.divStyles ? props.divStyles.main.borderRadius : ""};
+  border: ${props => (props.divStyles ? props.divStyles.main.border : "")};
+  color: #${props => (props.divStyles ? props.divStyles.main.textColor : "")};
+  font-size: ${props => (props.divStyles ? props.divStyles.main.fontSize : "")};
+  font-weight: ${props =>
+    props.divStyles ? props.divStyles.main.fontWeight : ""};
 `;
 
 export const StyledLink = styled.a`
@@ -51,27 +58,57 @@ export const RegisterContainer = styled.div`
 `;
 
 export const Input = styled.input`
+  border-radius: ${props => (props.inputStyles ? "5px" : "5px")};
   padding: 0.75rem 0.75rem;
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 90%;
-  border-radius: 5px;
+  // border-radius: 5px;
   font-size: 16px;
   &::-webkit-input-placeholder {
     color: #c2c2c2;
   }
-  border: 1px solid #ddd;
+  // border: 1px solid #ddd;
 
-  &:focus {
-    border: 1px solid #4285f4;
-    box-shadow: 0 0 5px #88d5e9;
-    outline: none;
-  }
+  border: ${props =>
+    props.inputStyles ? "1px solid #e79494" : "1px solid #ddd"};
 
-  &:select {
-    border: 3px solid #c2c2c2;
-  }
+  ${props =>
+    props.inputStyles && css
+      ? `
+        background-color: #eeb4b4;
+        &:focus {
+          border: 1px solid #e79494;
+          box-shadow: 0 0 5px #e79494;
+          outline: none;
+          background-color: #eeb4b4;
+        }
+  
+        ,
+        &::-webkit-input-placeholder {
+          color: #fff;
+        }
+  
+        &:select {
+          border: 3px solid #c2c2c2;
+        }
+      `
+      : `
+      &:focus {
+        border: 1px solid #4285f4;
+        box-shadow: 0 0 5px #88d5e9;
+        outline: none;
+      }
+
+      &:select {
+        border: 3px solid #c2c2c2;
+      }
+
+      &::-webkit-input-placeholder {
+        color: #c2c2c2;
+      }
+      `};
 
   ${props =>
     props.marginbottom &&
