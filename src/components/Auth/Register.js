@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import firebase from "../../firebase";
 import md5 from "md5";
+
 // Styled components
 const myStyles = {
   main: {
@@ -246,7 +247,7 @@ class Register extends React.Component {
               inputStyles={this.handleInputError(errors, "password")}
             />
             {loading ? (
-              <Img imgStyles={loadingImgStyle} src="../../img/waiting.gif" />
+              <Img imgStyles={loadingImgStyle} src="../../img/spinner.gif" />
             ) : (
               <Input type="submit" name="submit" value="Submit" submit />
             )}

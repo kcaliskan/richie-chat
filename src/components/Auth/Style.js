@@ -7,11 +7,33 @@ export const Container = styled.div`
   text-align: center;
 `;
 
+export const P = styled.p`
+  width: ${props => (props.pStyles ? props.pStyles.main.width : "")};
+  height: ${props => (props.pStyles ? props.pStyles.main.height : "")};
+  margin: ${props => (props.pStyles ? props.pStyles.main.margin : "")};
+  margin-top: ${props => (props.pStyles ? props.pStyles.main.marginTop : "")};
+  height: ${props => (props.pStyles ? props.pStyles.main.height : "")};
+  display: ${props => (props.pStyles ? props.pStyles.main.display : "")};
+  align-items: ${props => (props.pStyles ? props.pStyles.main.alignItems : "")};
+  justify-items: ${props =>
+    props.pStyles ? props.pStyles.main.justifyItems : ""};
+  font-size: ${props => (props.pStyles ? props.pStyles.main.fontSize : "")};
+`;
+
 export const Img = styled.img`
   width: ${props => (props.imgStyles ? props.imgStyles.main.width : "")};
+  height: ${props => (props.imgStyles ? props.imgStyles.main.height : "")};
   margin: ${props => (props.imgStyles ? props.imgStyles.main.margin : "")};
   margin-top: ${props =>
     props.imgStyles ? props.imgStyles.main.marginTop : ""};
+  margin-bottom: ${props =>
+    props.imgStyles ? props.imgStyles.main.marginBottom : ""};
+  height: ${props => (props.imgStyles ? props.imgStyles.main.height : "")};
+  display: ${props => (props.imgStyles ? props.imgStyles.main.display : "")};
+  align-items: ${props =>
+    props.imgStyles ? props.imgStyles.main.alignItems : ""};
+  justify-items: ${props =>
+    props.imgStyles ? props.imgStyles.main.justifyItems : ""};
 `;
 
 export const Form = styled.form``;
@@ -33,6 +55,17 @@ export const Div = styled.div`
   font-size: ${props => (props.divStyles ? props.divStyles.main.fontSize : "")};
   font-weight: ${props =>
     props.divStyles ? props.divStyles.main.fontWeight : ""};
+  height: ${props => (props.divStyles ? props.divStyles.main.height : "")};
+  display: ${props => (props.divStyles ? props.divStyles.main.display : "")};
+  align-items: ${props =>
+    props.divStyles ? props.divStyles.main.alignItems : ""};
+  justify-items: ${props =>
+    props.divStyles ? props.divStyles.main.justifyItems : ""};
+  align-content: ${props =>
+    props.divStyles ? props.divStyles.main.alignContent : ""};
+  justify-content: ${props =>
+    props.divStyles ? props.divStyles.main.justifyContent : ""};
+  flex-flow: ${props => (props.divStyles ? props.divStyles.main.flexFlow : "")};
 `;
 
 export const StyledLink = styled.a`
@@ -84,12 +117,12 @@ export const Input = styled.input`
           outline: none;
           background-color: #eeb4b4;
         }
-  
+
         ,
         &::-webkit-input-placeholder {
           color: #fff;
         }
-  
+
         &:select {
           border: 3px solid #c2c2c2;
         }

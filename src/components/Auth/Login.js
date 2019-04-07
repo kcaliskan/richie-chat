@@ -190,7 +190,7 @@ class Login extends React.Component {
               }
             />
             {loading ? (
-              <Img imgStyles={loadingImgStyle} src="../../img/waiting.gif" />
+              <Img imgStyles={loadingImgStyle} src="../../img/spinner.gif" />
             ) : (
               <Input type="submit" name="submit" value="Submit" submit />
             )}
