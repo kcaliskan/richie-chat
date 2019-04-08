@@ -7,7 +7,7 @@ import {
   MarginBottom,
   Div,
   Form
-} from "./Style";
+} from "../Style";
 import { Link } from "react-router-dom";
 import "../App.css";
 import firebase from "../../firebase";

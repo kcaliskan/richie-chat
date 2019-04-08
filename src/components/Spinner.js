@@ -1,5 +1,5 @@
 import React from "react";
-import { Img, Div, P } from "./Auth/Style";
+import { Img, Div, P } from "./Style";
 
 // Styled components
 const spinnerDivStyle = {

@@ -38,6 +38,23 @@ export const Img = styled.img`
 
 export const Form = styled.form``;
 
+export const Grid = styled.div`
+  display: ${props => (props.divStyles ? props.divStyles.main.display : "")};
+  grid-template-columns: ${props =>
+    props.divStyles ? props.divStyles.main.gridTemplateColumns : ""};
+  grid-template-rows: ${props =>
+    props.divStyles ? props.divStyles.main.gridTemplateRows : ""};
+  grid-gap: ${props => (props.divStyles ? props.divStyles.main.gridGap : "")};
+  grid-column-gap: ${props =>
+    props.divStyles ? props.divStyles.main.gridColumnGap : ""};
+  grid-row-gap: ${props =>
+    props.divStyles ? props.divStyles.main.gridRowGap : ""};
+  align-items: ${props =>
+    props.divStyles ? props.divStyles.main.alignItems : ""};
+  justify-items: ${props =>
+    props.divStyles ? props.divStyles.main.justifyItems : ""};
+`;
+
 export const Div = styled.div`
   text-decoration: none;
   margin: ${props => (props.divStyles ? props.divStyles.main.margin : "")};
