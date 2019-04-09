@@ -4,6 +4,7 @@ import SidePanel from "./SidePanel/SidePanel";
 import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
 import { Grid, Div } from "./Style";
+import { connect } from "react-redux";
 
 //Styled Components
 const gridDivStyle = {
@@ -16,10 +17,12 @@ const gridDivStyle = {
 
 class App extends React.Component {
   render() {
+    const { user } = this.props;
+
     return (
       <Grid divStyles={gridDivStyle}>
         <ColorPanel />
-        <SidePanel />
+        <SidePanel user={user} />
         <Messages />
         <MetaPanel />
       </Grid>
@@ -27,4 +30,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { user: state.user.currentUser };
+};
+
+export default connect(mapStateToProps)(App);

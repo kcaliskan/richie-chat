@@ -34,6 +34,11 @@ export const Img = styled.img`
     props.imgStyles ? props.imgStyles.main.alignItems : ""};
   justify-items: ${props =>
     props.imgStyles ? props.imgStyles.main.justifyItems : ""};
+  border-radius: ${props =>
+    props.imgStyles ? props.imgStyles.main.borderRadius : ""};
+  border: ${props => (props.imgStyles ? props.imgStyles.main.border : "")};
+  box-shadow: ${props =>
+    props.imgStyles ? props.imgStyles.main.boxShadow : ""};
 `;
 
 export const Form = styled.form``;
@@ -58,6 +63,8 @@ export const Grid = styled.div`
 export const Div = styled.div`
   text-decoration: none;
   margin: ${props => (props.divStyles ? props.divStyles.main.margin : "")};
+  margin-top: ${props =>
+    props.divStyles ? props.divStyles.main.marginTop : ""};
   margin-bottom: ${props =>
     props.divStyles ? props.divStyles.main.marginBottom : ""};
   width: ${props => (props.divStyles ? props.divStyles.main.width : "")};
@@ -68,6 +75,8 @@ export const Div = styled.div`
   border-radius: ${props =>
     props.divStyles ? props.divStyles.main.borderRadius : ""};
   border: ${props => (props.divStyles ? props.divStyles.main.border : "")};
+  box-shadow: ${props =>
+    props.divStyles ? props.divStyles.main.boxShadow : ""};
   color: #${props => (props.divStyles ? props.divStyles.main.textColor : "")};
   font-size: ${props => (props.divStyles ? props.divStyles.main.fontSize : "")};
   font-weight: ${props =>
@@ -83,15 +92,28 @@ export const Div = styled.div`
   justify-content: ${props =>
     props.divStyles ? props.divStyles.main.justifyContent : ""};
   flex-flow: ${props => (props.divStyles ? props.divStyles.main.flexFlow : "")};
+  cursor: ${props => (props.divStyles ? props.divStyles.main.cursor : "")};
 `;
 
 export const StyledLink = styled.a`
+width: 100%;
+  border-radius: ${props =>
+    props.linkStyles ? props.linkStyles.main.borderRadius : ""};
+  background: #${props =>
+    props.linkStyles ? props.linkStyles.main.background : ""};
+  padding: ${props => (props.linkStyles ? props.linkStyles.main.padding : "")};
+  box-shadow: ${props =>
+    props.linkStyles ? props.linkStyles.main.boxShadow : ""};
+  color: #${props =>
+    props.linkStyles ? props.linkStyles.main.textColor : "fbbc05"};
   text-decoration: none;
-  color: #fbbc05;
   &:hover {
-    color: #ca9703;
-  }
+  cursor: pointer;
+  background: #e0e0e0;
+
 `;
+
+export const Button = styled.button``;
 
 export const RegisterContainer = styled.div`
   width: 400px;
@@ -182,6 +204,12 @@ export const Input = styled.input`
 
 export const MarginBottom = styled.div`
   margin-bottom: 1rem;
+
+  ${props =>
+    props.half &&
+    css`
+      margin-bottom: 0.5rem;
+    `};
 
   ${props =>
     props.two &&

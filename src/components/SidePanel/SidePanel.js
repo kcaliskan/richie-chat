@@ -11,10 +11,11 @@ const customDivStyle = {
 
 class SidePanel extends React.Component {
   render() {
+    const { user } = this.props;
     return (
       <Div divStyles={customDivStyle}>
         SidePanel
-        <UserPanel />
+        <UserPanel user={user} />
       </Div>
     );
   }
