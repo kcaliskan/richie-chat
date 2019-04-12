@@ -217,7 +217,10 @@ class Register extends React.Component {
               marginbottom
               onChange={this.handleChange}
               value={username}
-              inputStyles={this.handleInputError(errors, "username")}
+              inputStyles={
+                this.handleInputError(errors, "username") ||
+                this.handleInputError(errors, "field")
+              }
             />
             <Input
               type="email"
@@ -226,7 +229,10 @@ class Register extends React.Component {
               marginbottom
               onChange={this.handleChange}
               value={email}
-              inputStyles={this.handleInputError(errors, "email")}
+              inputStyles={
+                this.handleInputError(errors, "email") ||
+                this.handleInputError(errors, "field")
+              }
             />
             <Input
               type="password"
@@ -235,7 +241,10 @@ class Register extends React.Component {
               marginbottom
               onChange={this.handleChange}
               value={password}
-              inputStyles={this.handleInputError(errors, "password")}
+              inputStyles={
+                this.handleInputError(errors, "password") ||
+                this.handleInputError(errors, "field")
+              }
             />
             <Input
               type="password"
@@ -244,7 +253,10 @@ class Register extends React.Component {
               marginbottom
               onChange={this.handleChange}
               value={passwordConfirmation}
-              inputStyles={this.handleInputError(errors, "password")}
+              inputStyles={
+                this.handleInputError(errors, "password") ||
+                this.handleInputError(errors, "field")
+              }
             />
             {loading ? (
               <Img imgStyles={loadingImgStyle} src="../../img/spinner.gif" />

@@ -180,7 +180,65 @@ export const StyledLink = styled.a`
   overflow: hidden;
 `;
 
-export const Button = styled.button``;
+export const Button = styled.button`
+  text-decoration: none;
+  margin: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.margin : ""};
+  margin-top: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.marginTop : ""};
+  margin-bottom: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.marginBottom : ""};
+  margin-right: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.marginRight : ""};
+  width: ${props => (props.buttonStyles ? props.buttonStyles.main.width : "")};
+  background-color: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.background : ""};
+  text-align: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.textAlign : ""};
+  padding: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.padding : ""};
+  border-radius: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.borderRadius : ""};
+  border: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.border : ""};
+  box-shadow: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.boxShadow : ""};
+  color: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.textColor : ""};
+  font-size: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.fontSize : ""};
+  font-weight: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.fontWeight : ""};
+  height: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.height : ""};
+  display: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.display : ""};
+  align-items: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.alignItems : ""};
+  justify-items: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.justifyItems : ""};
+  align-content: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.alignContent : ""};
+  justify-content: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.justifyContent : ""};
+  flex-flow: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.flexFlow : ""};
+  cursor: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.cursor : ""};
+  z-index: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.zIndex : ""};
+  position: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.position : ""};
+  top: ${props => (props.buttonStyles ? props.buttonStyles.main.top : "")};
+  left: ${props => (props.buttonStyles ? props.buttonStyles.main.left : "")};
+  transition: ${props =>
+    props.buttonStyles ? props.buttonStyles.main.transition : ""};
+
+  &:hover {
+    background: ${props =>
+      props.buttonStyles ? props.buttonStyles.main.hoverBackground : ""};
+  }
+`;
 
 export const RegisterContainer = styled.div`
   width: 400px;
@@ -197,17 +255,24 @@ export const RegisterContainer = styled.div`
 `;
 
 export const AddChannelInput = styled.input`
-  width: ${props => (props.inputStyles ? props.inputStyles.main.width : "")};
-  height: ${props => (props.inputStyles ? props.inputStyles.main.height : "")};
+  width: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.width : ""};
+  max-width: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.maxWidth : ""};
+  min-width: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.minWidth : ""};
+  height: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.height : ""};
   border-radius: ${props =>
-    props.inputStyles ? props.inputStyles.main.borderRadius : ""};
+    props.inputStyles.main ? props.inputStyles.main.borderRadius : ""};
   display: ${props =>
-    props.inputStyles ? props.inputStyles.main.display : ""};
+    props.inputStyles.main ? props.inputStyles.main.display : ""};
   padding: ${props =>
-    props.inputStyles ? props.inputStyles.main.padding : ""};
+    props.inputStyles.main ? props.inputStyles.main.padding : ""};
   font-size: ${props =>
-    props.inputStyles ? props.inputStyles.main.fontSize : ""};
-  border: ${props => (props.inputStyles ? props.inputStyles.main.border : "")};
+    props.inputStyles.main ? props.inputStyles.main.fontSize : ""};
+  border: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.border : ""};
 
   &::-webkit-input-placeholder {
     color: #c2c2c2;
@@ -217,6 +282,7 @@ export const AddChannelInput = styled.input`
     props.inputStyles.error && css
       ? `
         background-color: #eeb4b4;
+        border: 1px solid #e79494;
         &:focus {
           border: 1px solid #e79494;
           box-shadow: 0 0 5px #e79494;

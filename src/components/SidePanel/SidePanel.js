@@ -17,7 +17,7 @@ class SidePanel extends React.Component {
       <Div divStyles={customDivStyle}>
         SidePanel
         <UserPanel user={user} />
-        <Channels />
+        <Channels user={user} />
       </Div>
     );
   }

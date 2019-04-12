@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 const gridDivStyle = {
   main: {
     display: "grid;",
-    gridTemplateColumns: "repeat(4, 1fr)",
+    gridTemplateColumns: "1fr 4fr 10fr 4fr",
     gridTemplateRows: "minmax(100vh, max-content)"
   }
 };

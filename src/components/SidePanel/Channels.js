@@ -1,5 +1,6 @@
 import React from "react";
-import { Div, Img, P, Form, Span, AddChannelInput } from "../Style";
+import { Div, Img, P, Form, Span, AddChannelInput, Button } from "../Style";
+import firebase from "../../firebase";
 
 //Styled Components
 const wrapperDiv = {
@@ -58,10 +59,12 @@ const channelInputStyle = {
   main: {
     display: "block",
     padding: "1rem 1rem",
-    width: "700px",
+    // width: "700px",
     fontSize: "16px",
     borderRadius: "5px",
-    border: "1px solid #ddd"
+    border: "1px solid #ddd",
+    maxWidth: "700px",
+    minWidth: "700px"
   }
 };
 
@@ -78,7 +81,8 @@ const inputSpanStyle = {
 const formButtonsWrapper = {
   main: {
     display: "flex;",
-    flexFlow: "row;"
+    flexFlow: "row;",
+    justifyContent: "center"
   }
 };
 
@@ -130,12 +134,161 @@ const cancelIcon = {
   }
 };
 
+const errorInputStyle = {
+  main: {
+    display: "block",
+    padding: "1rem 1rem",
+    width: "700px",
+    fontSize: "16px",
+    borderRadius: "5px",
+    border: "1px solid #ddd"
+  },
+  error: {}
+};
+
+const errorDivStyle = {
+  main: {
+    width: "700px",
+    margin: "0 auto",
+    textAlign: "center",
+    background: "#FF6A6A",
+    padding: "1.5rem 0",
+    fontSize: "18px",
+    textColor: "#FFF",
+    fontWeight: "500",
+    borderRadius: "5px;",
+    border: "1px solid #e79494;",
+    marginBottom: "1rem"
+  }
+};
+
+const warningImgStyle = {
+  main: {
+    width: "32px"
+  }
+};
+
+// End of Styled Components
+
 class Channels extends React.Component {
-  state = { channels: [], showModal: false };
+  state = {
+    channels: [],
+    showModal: false,
+    channelName: "",
+    channelDescription: "",
+    errors: [],
+    currentUser: this.props.user,
+    channelsRef: firebase.database().ref("channels")
+  };
 
-  modalHandler = () => this.setState({ showModal: true });
+  modalHandler = () => this.setState({ showModal: true, errors: [] });
 
-  modalCloseHandler = () => this.setState({ showModal: false });
+  modalCloseHandler = () => this.setState({ showModal: false, errors: [] });
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value, errors: [] });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    if (this.isFormValid()) {
+    } else {
+    }
+  };
+
+  isFormValid = () => {
+    let errors = [];
+    let error;
+
+    if (this.isFormEmpty(this.state)) {
+      // throw error
+      // error = { message: "Fill in all fields" };
+      error = { message: "Fill in all fields." };
+      this.setState({ errors: errors.concat(error) });
+      this.handleInputError(this.state.errors, "fill");
+      return false;
+    } else if (!this.isChannelNameValid(this.state)) {
+      // throw error
+      error = { message: "Channel name must be longer than 2 characters." };
+      this.setState({ errors: errors.concat(error) });
+      return false;
+    } else if (!this.isChannelDescriptionValid(this.state)) {
+      // throw error
+      error = {
+        message: "Channel description must be longer than 6 characters."
+      };
+      this.setState({ errors: errors.concat(error) });
+      return false;
+    } else {
+      this.addChannelToFirebase(this.state);
+      return true;
+    }
+  };
+
+  isFormEmpty = ({ channelName, channelDescription }) => {
+    return !channelName.length || !channelDescription.length;
+  };
+
+  isChannelNameValid = ({ channelName }) => {
+    if (channelName.length < 2) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  isChannelDescriptionValid = ({ channelDescription }) => {
+    if (channelDescription.length < 5) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  handleInputError = (errors, inputName) => {
+    return errors.some(error =>
+      error.message.toLowerCase().includes(inputName)
+    );
+  };
+
+  displayErrors = errors =>
+    errors.map((error, i) => (
+      <p key={i} className="warningPstyle">
+        <Img src={`../../img/warning.png`} imgStyles={warningImgStyle} />
+        <span className="pl-1">{error.message}</span>
+      </p>
+    ));
+
+  addChannelToFirebase = ({
+    channelName,
+    channelDescription,
+    currentUser,
+    channelsRef
+  }) => {
+    let newChannelKey = channelsRef.push().key;
+
+    let newChannel = {
+      id: newChannelKey,
+      channelName: channelName,
+      channelDescription: channelDescription,
+      createdBy: {
+        name: currentUser.displayName,
+        avatar: currentUser.photoURL
+      }
+    };
+
+    channelsRef
+      .child(newChannelKey)
+      .set(newChannel)
+      .then(() => {
+        this.setState({ channelName: "", channelDescription: "" });
+        this.modalCloseHandler();
+        console.log("channel added");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
     return (
@@ -154,44 +307,67 @@ class Channels extends React.Component {
         </Div>
         {this.state.showModal ? (
           <Div divStyles={modalWrapperDiv}>
-            <Form>
+            {this.state.errors.length > 0 && (
+              <Div divStyles={errorDivStyle}>
+                {this.displayErrors(this.state.errors)}
+              </Div>
+            )}
+            <Form onSubmit={this.handleSubmit}>
               <Span spanStyles={inputSpanStyle}>Channel Name</Span>
               <AddChannelInput
                 name="channelName"
                 type="text"
                 placeholder="Name of Channel"
-                inputStyles={channelInputStyle}
+                inputStyles={
+                  this.handleInputError(this.state.errors, "name") ||
+                  this.handleInputError(this.state.errors, "field")
+                    ? errorInputStyle
+                    : channelInputStyle
+                }
+                onChange={this.handleChange}
               />
               <Span spanStyles={inputSpanStyle}>Channel Description</Span>
               <AddChannelInput
                 name="channelDescription"
                 type="text"
                 placeholder="About the Channel"
-                inputStyles={channelInputStyle}
+                inputStyles={
+                  this.handleInputError(this.state.errors, "description") ||
+                  this.handleInputError(this.state.errors, "field")
+                    ? errorInputStyle
+                    : channelInputStyle
+                }
                 marginbottom1
+                onChange={this.handleChange}
               />
+
+              <Div divStyles={formButtonsWrapper}>
+                <Button
+                  type="submit"
+                  name="submit"
+                  value="Submit"
+                  buttonStyles={sendButtonStyle}
+                >
+                  {" "}
+                  <Img
+                    imgStyles={approveIcon}
+                    src={`../../img/approve-64.png`}
+                  />{" "}
+                  <Span marginleft>Add</Span>
+                </Button>
+                <Button
+                  buttonStyles={cancelButtonStyle}
+                  onClick={this.modalCloseHandler}
+                >
+                  {" "}
+                  <Img
+                    imgStyles={cancelIcon}
+                    src={`../../img/cancel-64.png`}
+                  />{" "}
+                  <Span marginleft>Cancel</Span>
+                </Button>
+              </Div>
             </Form>
-            <Div divStyles={formButtonsWrapper}>
-              <Div divStyles={sendButtonStyle}>
-                {" "}
-                <Img
-                  imgStyles={approveIcon}
-                  src={`../../img/approve-64.png`}
-                />{" "}
-                <Span marginleft>Add</Span>
-              </Div>
-              <Div
-                divStyles={cancelButtonStyle}
-                onClick={this.modalCloseHandler}
-              >
-                {" "}
-                <Img
-                  imgStyles={cancelIcon}
-                  src={`../../img/cancel-64.png`}
-                />{" "}
-                <Span marginleft>Cancel</Span>
-              </Div>
-            </Div>
           </Div>
         ) : null}
       </React.Fragment>
