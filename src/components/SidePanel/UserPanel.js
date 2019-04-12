@@ -1,13 +1,14 @@
 import React from "react";
 import firebase from "../../firebase";
 import { Div, Img, StyledLink, MarginBottom } from "../Style";
+import { CSSTransitionGroup } from "react-transition-group";
 
 // Styled Components
 const logoImgStyle = {
   main: {
     borderRadius: "50px;",
     border: "5px solid #F5C023",
-    boxShadow: "0px 0px 5px 0px #CC9A08;"
+    boxShadow: "0px 0px 2px 0px #CC9A08;"
   }
 };
 
@@ -16,11 +17,13 @@ const userMenuWrapperDiv = {
     display: "flex;",
     flexFlow: "column",
     alignItems: "center",
-    background: "FDFCFA;",
+    background: "#FDFCFA;",
     marginTop: "-2px",
-    padding: "1rem 1.5rem;",
+    padding: "1rem 0",
     boxShadow: "0px 0px 2px 0px #D4D4D4;",
-    borderRadius: "4px"
+    borderRadius: "4px",
+    position: "absolute",
+    top: "152px"
   }
 };
 
@@ -28,30 +31,37 @@ const userWrapperDivStyle = {
   main: {
     display: "flex;",
     flexFlow: "column",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: "1.5rem"
   }
 };
 
 const linkBtnStyle = {
   main: {
+    display: "inline-block",
+    position: "relative",
     padding: "0.5rem 1rem;",
-    background: "FDFCFA;",
+    background: "#FDFCFA;",
     boxShadow: "0px 0px 2px 0px #D4D4D4;",
-    borderRadius: "4px"
+    borderRadius: "4px",
+    fontWeight: "500",
+    fontSize: "16px"
   }
 };
 
-const linkBtnStyle2 = {
+const userSectionLinkStyle = {
   main: {
-    padding: "0.5rem 1rem;"
+    padding: "0.5rem 2rem;",
+    width: "100%",
+    fontWeight: "500"
   }
 };
 
 class UserPanel extends React.Component {
   state = {
     showMenu: false,
-    userName: this.props.user.displayName,
-    photoURL: this.props.user.photoURL
+    currentUser: this.props.user,
+    menuDiv: React.createRef()
   };
 
   showMenu = event => {
@@ -63,7 +73,6 @@ class UserPanel extends React.Component {
 
   closeMenu = event => {
     if (event.target.className !== "menu-item") {
-      console.log(event.target.className);
       this.setState({ showMenu: false }, () => {
         document.removeEventListener("click", this.closeMenu);
       });
@@ -77,19 +86,25 @@ class UserPanel extends React.Component {
   render() {
     return (
       <Div divStyles={userWrapperDivStyle}>
-        <Img src={this.state.photoURL} imgStyles={logoImgStyle} />
+        <Img src={this.state.currentUser.photoURL} imgStyles={logoImgStyle} />
         <MarginBottom half />
+
         <StyledLink onClick={this.showMenu} linkStyles={linkBtnStyle}>
-          {this.state.userName} ▼
+          {this.state.currentUser.displayName} ▼
         </StyledLink>
 
         {this.state.showMenu ? (
           <Div className="menu" divStyles={userMenuWrapperDiv}>
-            <StyledLink linkStyles={linkBtnStyle2}>Change Avatar</StyledLink>
+            <StyledLink linkStyles={userSectionLinkStyle}>Settings</StyledLink>
             <MarginBottom half />
-            <StyledLink>Menu item 1</StyledLink>
+            <StyledLink linkStyles={userSectionLinkStyle}>
+              Change Avatar
+            </StyledLink>
             <MarginBottom half />
-            <StyledLink className="menu-item" onClick={this.signOutHandle}>
+            <StyledLink
+              onClick={this.signOutHandle}
+              linkStyles={userSectionLinkStyle}
+            >
               Sign Out
             </StyledLink>
           </Div>

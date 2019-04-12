@@ -26,8 +26,8 @@ class Root extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.props.history.push("/");
         this.props.setUser(user);
+        this.props.history.push("/");
       } else {
         this.props.clearUser();
         this.props.history.push("/login");

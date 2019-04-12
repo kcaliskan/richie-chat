@@ -18,7 +18,6 @@ const gridDivStyle = {
 class App extends React.Component {
   render() {
     const { user } = this.props;
-
     return (
       <Grid divStyles={gridDivStyle}>
         <ColorPanel />

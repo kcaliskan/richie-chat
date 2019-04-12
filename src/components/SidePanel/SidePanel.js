@@ -1,11 +1,12 @@
 import React from "react";
 import UserPanel from "./UserPanel";
+import Channels from "./Channels";
 import { Div } from "../Style";
 
 //Styled Components
 const customDivStyle = {
   main: {
-    background: "4285f4"
+    background: "#4285f4"
   }
 };
 
@@ -16,6 +17,7 @@ class SidePanel extends React.Component {
       <Div divStyles={customDivStyle}>
         SidePanel
         <UserPanel user={user} />
+        <Channels />
       </Div>
     );
   }

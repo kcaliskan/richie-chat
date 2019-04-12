@@ -19,7 +19,7 @@ const myStyles = {
     width: "400px;",
     margin: "0 auto",
     textAlign: "center;",
-    background: "F3F3F3;",
+    background: "#F3F3F3;",
     padding: "0.75rem 0;",
     borderRadius: "5px;",
     border: "1px solid #ddd;"
@@ -31,10 +31,10 @@ const errorDivStyle = {
     width: "400px",
     margin: "0 auto",
     textAlign: "center",
-    background: "FF6A6A",
+    background: "#FF6A6A",
     padding: "0.5rem 0",
     fontSize: "16px",
-    textColor: "FFF",
+    textColor: "#FFF",
     fontWeight: "500",
     borderRadius: "5px;",
     border: "1px solid #ddd;",
@@ -67,10 +67,10 @@ const registerStyles = {
     width: "400px",
     margin: "0 auto",
     textAlign: "center",
-    background: "fafafa",
+    background: "#fafafa",
     padding: "0.75rem 0",
     fontSize: "36px",
-    textColor: "4285f4",
+    textColor: "#4285f4",
     fontWeight: "700;"
   }
 };

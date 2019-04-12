@@ -20,3 +20,42 @@
 .mt-1 {
   margin-top: 1rem;
 }
+
+/* .menu-enter {
+  max-height: 0px;
+  -webkit-transition: max-height 0.25s linear;
+  overflow: hidden;
+}
+
+.menu-enter.menu-enter-active {
+  height: -150px;
+  max-height: 150px;
+}
+
+.menu-leave {
+  height: -50px;
+  max-height: 150px;
+  -webkit-transition: all 0.25s ease;
+} */
+
+/* .menu-leave.menu-leave-active {
+  overflow: hidden;
+  max-height: 150px;
+} */
+
+.menu-enter,
+.menu-leave.menu-leave-active {
+  /* max-height: 50px; */
+  overflow: hidden;
+}
+
+.menu-leave,
+.menu-enter.menu-enter-active {
+  /* max-height: 260px; /* Approximate max height of dropdown */
+  */overflow: hidden;
+}
+
+.menu-enter.menu-enter-active,
+.menu-leave.menu-leave-active {
+  transition: all 0.2s ease-in-out;
+}
