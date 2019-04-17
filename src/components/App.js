@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import ColorPanel from "./ColorPanel/ColorPanel";
 import SidePanel from "./SidePanel/SidePanel";
 import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
-import { Grid, Div } from "./Style";
+import { Grid } from "./Style";
 import { connect } from "react-redux";
 
 //Styled Components

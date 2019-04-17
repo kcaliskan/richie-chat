@@ -1,6 +1,20 @@
 import React from "react";
-import { Div, Img, P, Form, Span, AddChannelInput, Button } from "../Style";
+import {
+  Div,
+  Img,
+  P,
+  Form,
+  Span,
+  AddChannelInput,
+  Button,
+  Ul,
+  Li,
+  MarginBottom,
+  StyledLink
+} from "../Style";
 import firebase from "../../firebase";
+import { connect } from "react-redux";
+import { setCurrentChannel } from "../../actions/index";
 
 //Styled Components
 const wrapperDiv = {
@@ -168,6 +182,34 @@ const warningImgStyle = {
   }
 };
 
+const channelListUlStyle = {
+  main: {
+    listStyle: "none"
+  }
+};
+
+const channelListLiStyle = {
+  main: {}
+};
+
+const channelLinkStyle = {
+  main: {
+    display: "block",
+    textColor: "#FFF",
+    padding: "0.25rem 1rem",
+    hoverBackground: "#FBBC05"
+  }
+};
+
+const activeChannelLinkStyle = {
+  main: {
+    display: "block",
+    textColor: "#FFF",
+    padding: "0.25rem 1rem",
+    hoverBackground: "#FBBC05",
+    background: "#FBBC05"
+  }
+};
 // End of Styled Components
 
 class Channels extends React.Component {
@@ -178,12 +220,38 @@ class Channels extends React.Component {
     channelDescription: "",
     errors: [],
     currentUser: this.props.user,
-    channelsRef: firebase.database().ref("channels")
+    channelsRef: firebase.database().ref("channels"),
+    firstLoad: true,
+    activeChannel: ""
+  };
+
+  componentDidMount() {
+    this.channelAddListeners();
+  }
+
+  componentWillUnmount() {
+    this.removeChannelListeners();
+  }
+
+  channelAddListeners = () => {
+    let loadedChannels = [];
+
+    this.state.channelsRef.on("child_added", snap => {
+      loadedChannels.push(snap.val());
+      this.setState({ channels: loadedChannels }, () => this.setFirstChannel());
+    });
+  };
+
+  removeChannelListeners = () => {
+    this.state.channelsRef.off();
   };
 
   modalHandler = () => this.setState({ showModal: true, errors: [] });
 
-  modalCloseHandler = () => this.setState({ showModal: false, errors: [] });
+  modalCloseHandler = event => {
+    event.preventDefault();
+    this.setState({ showModal: false, errors: [] });
+  };
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value, errors: [] });
@@ -191,8 +259,10 @@ class Channels extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    if (this.isFormValid()) {
-    } else {
+
+    if (this.isFormValid(this.state)) {
+      this.addChannelToFirebase();
+      this.modalCloseHandler(event);
     }
   };
 
@@ -220,7 +290,6 @@ class Channels extends React.Component {
       this.setState({ errors: errors.concat(error) });
       return false;
     } else {
-      this.addChannelToFirebase(this.state);
       return true;
     }
   };
@@ -259,12 +328,14 @@ class Channels extends React.Component {
       </p>
     ));
 
-  addChannelToFirebase = ({
-    channelName,
-    channelDescription,
-    currentUser,
-    channelsRef
-  }) => {
+  addChannelToFirebase = () => {
+    const {
+      channelsRef,
+      channelName,
+      channelDescription,
+      currentUser
+    } = this.state;
+
     let newChannelKey = channelsRef.push().key;
 
     let newChannel = {
@@ -290,9 +361,44 @@ class Channels extends React.Component {
       });
   };
 
+  displayChannels = channels =>
+    channels.length > 0 &&
+    channels.map(channel => (
+      <Li liStyles={channelListLiStyle} key={channel.id}>
+        <StyledLink
+          linkStyles={
+            this.state.activeChannel.id === channel.id
+              ? activeChannelLinkStyle
+              : channelLinkStyle
+          }
+          onClick={() => this.changeChannel(channel)}
+        >
+          # {channel.channelName}
+        </StyledLink>
+      </Li>
+    ));
+
+  changeChannel = channel => {
+    this.props.setCurrentChannel(channel);
+    this.setActiveChannel(channel);
+  };
+
+  setFirstChannel = () => {
+    const firstChannel = this.state.channels[0];
+    if (this.state.firstLoad && this.state.channels.length > 0) {
+      this.props.setCurrentChannel(firstChannel);
+      this.setActiveChannel(firstChannel);
+      this.setState({ firstLoad: false });
+    }
+  };
+
+  setActiveChannel = channel => {
+    this.setState({ activeChannel: channel });
+  };
+
   render() {
     return (
-      <React.Fragment>
+      <Div>
         <Div divStyles={wrapperDiv}>
           <Img imgStyles={channelIconStyle} src={`../../img/group-64.png`} />
           <P pStyles={channelsTextStyle}>
@@ -305,6 +411,11 @@ class Channels extends React.Component {
             onClick={this.modalHandler}
           />
         </Div>
+        <MarginBottom half />
+        <Ul ulStyles={channelListUlStyle}>
+          {this.displayChannels(this.state.channels)}
+        </Ul>
+
         {this.state.showModal ? (
           <Div divStyles={modalWrapperDiv}>
             {this.state.errors.length > 0 && (
@@ -356,6 +467,7 @@ class Channels extends React.Component {
                   <Span marginleft>Add</Span>
                 </Button>
                 <Button
+                  type="button"
                   buttonStyles={cancelButtonStyle}
                   onClick={this.modalCloseHandler}
                 >
@@ -370,9 +482,12 @@ class Channels extends React.Component {
             </Form>
           </Div>
         ) : null}
-      </React.Fragment>
+      </Div>
     );
   }
 }
 
-export default Channels;
+export default connect(
+  null,
+  { setCurrentChannel }
+)(Channels);

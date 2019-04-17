@@ -7,6 +7,20 @@ export const Container = styled.div`
   text-align: center;
 `;
 
+export const Ul = styled.ul`
+  list-style: ${props => (props.ulStyles ? props.ulStyles.main.listStyle : "")};
+  padding: ${props => (props.ulStyles ? props.ulStyles.main.padding : "")};
+  padding-bottom: ${props =>
+    props.ulStyles ? props.ulStyles.main.paddingBottom : ""};
+`;
+export const Li = styled.li`
+  color: ${props => (props.liStyles ? props.liStyles.main.color : "")};
+  list-style: ${props => (props.liStyles ? props.liStyles.main.listStyle : "")};
+  padding: ${props => (props.liStyles ? props.liStyles.main.padding : "")};
+  padding-bottom: ${props =>
+    props.liStyles ? props.liStyles.main.paddingBottom : ""};
+`;
+
 export const P = styled.p`
   color: ${props => (props.pStyles ? props.pStyles.main.color : "")};
   font-weight: ${props => (props.pStyles ? props.pStyles.main.fontWeight : "")};
@@ -170,7 +184,8 @@ export const StyledLink = styled.a`
     props.linkStyles ? props.linkStyles.main.transition : ""};
   &:hover {
     cursor: pointer;
-    background: #eaeaea;
+    background: ${props =>
+      props.linkStyles ? props.linkStyles.main.hoverBackground : "#eaeaea"};
   }
   z-index: ${props => (props.linkStyles ? props.linkStyles.main.zIndex : "")};
   position: ${props =>

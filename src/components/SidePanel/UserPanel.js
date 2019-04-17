@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { Div, Img, StyledLink, MarginBottom } from "../Style";
-import { CSSTransitionGroup } from "react-transition-group";
+// import { CSSTransitionGroup } from "react-transition-group";
 
 // Styled Components
 const logoImgStyle = {
