@@ -1,19 +1,5 @@
 import React from "react";
-import {
-  Div,
-  Grid,
-  Img,
-  P,
-  Form,
-  Span,
-  AddChannelInput,
-  Button,
-  Ul,
-  Li,
-  MarginBottom,
-  StyledLink,
-  SearchInput
-} from "../Style";
+import { Div, Grid, Img, Span, SearchInput } from "../Style";
 
 const wrapperDivStyle = {
   main: {

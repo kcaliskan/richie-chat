@@ -172,6 +172,11 @@ export const Div = styled.div`
   left: ${props => (props.divStyles ? props.divStyles.main.left : "")};
   transition: ${props =>
     props.divStyles ? props.divStyles.main.transition : ""};
+    overflow: ${props =>
+      props.divStyles ? props.divStyles.main.overflow : ""};
+
+      overflow-y: ${props =>
+        props.divStyles ? props.divStyles.main.overflowY : ""};
 
   &:hover {
     background: ${props =>
