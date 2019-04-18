@@ -15,7 +15,6 @@ class SidePanel extends React.Component {
     const { user } = this.props;
     return (
       <Div divStyles={customDivStyle}>
-        SidePanel
         <UserPanel user={user} />
         <Channels user={user} />
       </Div>

@@ -37,6 +37,9 @@ export const P = styled.p`
 `;
 
 export const Img = styled.img`
+  position: ${props => (props.imgStyles ? props.imgStyles.main.position : "")};
+  top: ${props => (props.imgStyles ? props.imgStyles.main.top : "")};
+  left: ${props => (props.imgStyles ? props.imgStyles.main.left : "")};
   width: ${props => (props.imgStyles ? props.imgStyles.main.width : "")};
   height: ${props => (props.imgStyles ? props.imgStyles.main.height : "")};
   margin: ${props => (props.imgStyles ? props.imgStyles.main.margin : "")};
@@ -110,6 +113,15 @@ export const Grid = styled.div`
     props.divStyles ? props.divStyles.main.alignItems : ""};
   justify-items: ${props =>
     props.divStyles ? props.divStyles.main.justifyItems : ""};
+  background-color: ${props =>
+    props.divStyles ? props.divStyles.main.background : ""};
+  padding: ${props => (props.divStyles ? props.divStyles.main.padding : "")};
+  margin: ${props => (props.divStyles ? props.divStyles.main.margin : "")};
+  border-radius: ${props =>
+    props.divStyles ? props.divStyles.main.borderRadius : ""};
+  border: ${props => (props.divStyles ? props.divStyles.main.border : "")};
+  box-shadow: ${props =>
+    props.divStyles ? props.divStyles.main.boxShadow : ""};
 `;
 
 export const Div = styled.div`
@@ -121,6 +133,8 @@ export const Div = styled.div`
     props.divStyles ? props.divStyles.main.marginBottom : ""};
   margin-right: ${props =>
     props.divStyles ? props.divStyles.main.marginRight : ""};
+  margin-left: ${props =>
+    props.divStyles ? props.divStyles.main.marginLeft : ""};
   width: ${props => (props.divStyles ? props.divStyles.main.width : "")};
   background-color: ${props =>
     props.divStyles ? props.divStyles.main.background : ""};
@@ -140,6 +154,10 @@ export const Div = styled.div`
   display: ${props => (props.divStyles ? props.divStyles.main.display : "")};
   align-items: ${props =>
     props.divStyles ? props.divStyles.main.alignItems : ""};
+  align-self: ${props =>
+    props.divStyles ? props.divStyles.main.alignSelf : ""};
+  justify-self: ${props =>
+    props.divStyles ? props.divStyles.main.alignSelf : ""};
   justify-items: ${props =>
     props.divStyles ? props.divStyles.main.justifyItems : ""};
   align-content: ${props =>
@@ -364,6 +382,79 @@ export const Input = styled.input`
     props.inputStyles && css
       ? `
         background-color: #eeb4b4;
+        &:focus {
+          border: 1px solid #e79494;
+          box-shadow: 0 0 5px #e79494;
+          outline: none;
+          background-color: #eeb4b4;
+        }
+
+        ,
+        &::-webkit-input-placeholder {
+          color: #fff;
+        }
+
+        &:select {
+          border: 3px solid #c2c2c2;
+        }
+      `
+      : `
+      &:focus {
+        border: 1px solid #4285f4;
+        box-shadow: 0 0 5px #88d5e9;
+        outline: none;
+      }
+
+      &:select {
+        border: 3px solid #c2c2c2;
+      }
+
+      &::-webkit-input-placeholder {
+        color: #c2c2c2;
+      }
+      `};
+
+  ${props =>
+    props.marginbottom &&
+    css`
+      margin-bottom: 0.5rem;
+    `};
+
+  ${props =>
+    props.submit &&
+    css`
+      background: #4285f4;
+      padding: 0.5rem 0;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      &:hover {
+        opacity: 0.95;
+      }
+    `};
+`;
+
+export const SearchInput = styled.input`
+  border-radius: ${props => (props.inputStyles ? "5px" : "5px")};
+  padding: 0.75rem 0.75rem;
+  display: block;
+  margin-left: auto;
+
+  font-size: 14px;
+  box-shadow: 1px 1px #f0f0f0;
+
+  &::-webkit-input-placeholder {
+    color: #c2c2c2;
+  }
+  // border: 1px solid #ddd;
+  width: ${props => (props.inputStyles ? props.inputStyles.main.width : "")};
+  border: ${props =>
+    props.inputStyles.error ? "1px solid #e79494" : "1px solid #ddd"};
+
+  ${props =>
+    props.inputStyles.error && css
+      ? `
+       
         &:focus {
           border: 1px solid #e79494;
           box-shadow: 0 0 5px #e79494;

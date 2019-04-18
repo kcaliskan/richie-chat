@@ -86,6 +86,7 @@ class UserPanel extends React.Component {
   render() {
     return (
       <Div divStyles={userWrapperDivStyle}>
+        <MarginBottom half />
         <Img src={this.state.currentUser.photoURL} imgStyles={logoImgStyle} />
         <MarginBottom half />
 

@@ -197,7 +197,7 @@ const channelLinkStyle = {
     display: "block",
     textColor: "#FFF",
     padding: "0.25rem 1rem",
-    hoverBackground: "#FBBC05"
+    hoverBackground: "#0e62ed"
   }
 };
 
@@ -415,7 +415,6 @@ class Channels extends React.Component {
         <Ul ulStyles={channelListUlStyle}>
           {this.displayChannels(this.state.channels)}
         </Ul>
-
         {this.state.showModal ? (
           <Div divStyles={modalWrapperDiv}>
             {this.state.errors.length > 0 && (
