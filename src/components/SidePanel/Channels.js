@@ -60,7 +60,7 @@ const modalWrapperDiv = {
     justifyContent: "center",
     alignItems: "center",
     position: "fixed",
-    zIndex: "1",
+    zIndex: "11",
     top: "0",
     left: "0",
     width: "100%",
@@ -88,7 +88,7 @@ const inputSpanStyle = {
     margin: "1rem 0",
     fontSize: "24px",
     fontWeight: "700",
-    color: "#FBBC05"
+    textColor: "#FBBC05"
   }
 };
 

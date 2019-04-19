@@ -1,5 +1,6 @@
 import React from "react";
 import MessagesHeader from "./MessagesHeader";
+import MessageForm from "./MessageForm";
 import { Div, Grid, Img, Span, SearchInput } from "../Style";
 
 // Styled Components
@@ -11,7 +12,7 @@ const wrapperDivStyle = {
     borderRadius: "5px",
     border: "1px solid #ededed",
     boxShadow: "1px 2px #ededed;",
-    height: "72vh",
+    height: "60vh",
     overflowY: "scroll"
   }
 };
@@ -22,6 +23,7 @@ class Messages extends React.Component {
       <div>
         <MessagesHeader />
         <Div divStyles={wrapperDivStyle}>Messges</Div>
+        <MessageForm />
       </div>
     );
   }

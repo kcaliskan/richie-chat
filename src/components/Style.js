@@ -40,6 +40,8 @@ export const Img = styled.img`
   position: ${props => (props.imgStyles ? props.imgStyles.main.position : "")};
   top: ${props => (props.imgStyles ? props.imgStyles.main.top : "")};
   left: ${props => (props.imgStyles ? props.imgStyles.main.left : "")};
+  right: ${props => (props.imgStyles ? props.imgStyles.main.right : "")};
+  bottom: ${props => (props.imgStyles ? props.imgStyles.main.bottom : "")};
   width: ${props => (props.imgStyles ? props.imgStyles.main.width : "")};
   height: ${props => (props.imgStyles ? props.imgStyles.main.height : "")};
   margin: ${props => (props.imgStyles ? props.imgStyles.main.margin : "")};
@@ -66,6 +68,8 @@ export const Img = styled.img`
     props.imgStyles ? props.imgStyles.main.boxShadow : ""};
   transition: ${props =>
     props.imgStyles ? props.imgStyles.main.transition : ""};
+    vertical-align: ${props =>
+      props.imgStyles ? props.imgStyles.main.verticalAlign : ""};
   &:hover {
     transform: ${props =>
       props.imgStyles ? props.imgStyles.main.transform : ""};
@@ -83,8 +87,9 @@ export const Span = styled.span`
     props.spanStyles ? props.spanStyles.main.fontSize : ""};
   font-weight: ${props =>
     props.spanStyles ? props.spanStyles.main.fontWeight : ""};
-  color: ${props => (props.spanStyles ? props.spanStyles.main.color : "")};
-
+  color: ${props => (props.spanStyles ? props.spanStyles.main.textColor : "")};
+  align-self: ${props =>
+    props.spanStyles ? props.spanStyles.main.alignSelf : ""};
   ${props =>
     props.marginleft &&
     css`
@@ -122,6 +127,12 @@ export const Grid = styled.div`
   border: ${props => (props.divStyles ? props.divStyles.main.border : "")};
   box-shadow: ${props =>
     props.divStyles ? props.divStyles.main.boxShadow : ""};
+  position: ${props => (props.divStyles ? props.divStyles.main.position : "")};
+  height: ${props => (props.divStyles ? props.divStyles.main.height : "")};
+  width: ${props => (props.divStyles ? props.divStyles.main.width : "")};
+  overflow-y: ${props =>
+    props.divStyles ? props.divStyles.main.overflowY : ""};
+  z-index: ${props => (props.divStyles ? props.divStyles.main.zIndex : "")};
 `;
 
 export const Div = styled.div`
@@ -138,6 +149,8 @@ export const Div = styled.div`
   width: ${props => (props.divStyles ? props.divStyles.main.width : "")};
   background-color: ${props =>
     props.divStyles ? props.divStyles.main.background : ""};
+  background: ${props =>
+    props.divStyles ? props.divStyles.main.backgroundAll : ""};
   text-align: ${props =>
     props.divStyles ? props.divStyles.main.textAlign : ""};
   padding: ${props => (props.divStyles ? props.divStyles.main.padding : "")};
@@ -172,15 +185,29 @@ export const Div = styled.div`
   left: ${props => (props.divStyles ? props.divStyles.main.left : "")};
   transition: ${props =>
     props.divStyles ? props.divStyles.main.transition : ""};
-    overflow: ${props =>
-      props.divStyles ? props.divStyles.main.overflow : ""};
+  overflow: ${props => (props.divStyles ? props.divStyles.main.overflow : "")};
+  background-size: ${props =>
+    props.divStyles ? props.divStyles.main.backgroundSize : ""};
 
-      overflow-y: ${props =>
-        props.divStyles ? props.divStyles.main.overflowY : ""};
+  overflow-y: ${props =>
+    props.divStyles ? props.divStyles.main.overflowY : ""};
 
   &:hover {
-    background: ${props =>
+
+    background-color: ${props =>
       props.divStyles ? props.divStyles.main.hoverBackground : ""};
+
+
+    background: ${props =>
+      props.divStyles ? props.divStyles.main.hoverBackgroundAll : ""};
+
+      background-size: ${props =>
+        props.divStyles ? props.divStyles.main.hoverBackgroundSize : ""};
+  }
+
+  ${Div}:hover & {
+    background: ${props =>
+      props.divStyles ? props.divStyles.main.parentHoverBackground : ""};
   }
 `;
 
@@ -290,6 +317,81 @@ export const RegisterContainer = styled.div`
   -moz-box-shadow: 0 0 10px #e0e0e0;
   -webkit-box-shadow: 0 0 10px #e0e0e0;
   box-shadow: 0 0 8px #e0e0e0;
+`;
+
+export const WriteMessageInput = styled.input`
+  border-radius: ${props =>
+    props.inputStyles ? props.inputStyles.main.borderRadius : "5px"};
+  padding: ${props =>
+    props.inputStyles ? props.inputStyles.main.padding : "0.75rem 0.75rem"};
+  display: block;
+  // margin-left: auto;
+
+  font-size: 14px;
+  box-shadow: 1px 1px #f0f0f0;
+
+  &::-webkit-input-placeholder {
+    color: #c2c2c2;
+  }
+  // border: 1px solid #ddd;
+  width: ${props => (props.inputStyles ? props.inputStyles.main.width : "")};
+  border: ${props =>
+    props.inputStyles.error ? "1px solid #e79494" : "1px solid #ddd"};
+
+  ${props =>
+    props.inputStyles.error && css
+      ? `
+       
+        &:focus {
+          border: 1px solid #e79494;
+          box-shadow: 0 0 5px #e79494;
+          outline: none;
+          background-color: #eeb4b4;
+        }
+
+        ,
+        &::-webkit-input-placeholder {
+          color: #fff;
+        }
+
+        &:select {
+          border: 3px solid #c2c2c2;
+        }
+      `
+      : `
+      &:focus {
+        // border: 1px solid #4285f4;
+        // box-shadow: 0 0 5px #88d5e9;
+        outline: none;
+      }
+
+      &:select {
+        border: 3px solid #c2c2c2;
+      }
+
+      &::-webkit-input-placeholder {
+        color: #c2c2c2;
+      }
+      `};
+
+  ${props =>
+    props.marginbottom &&
+    css`
+      margin-bottom: 0.5rem;
+    `};
+
+  ${props =>
+    props.submit &&
+    css`
+      background: #4285f4;
+      padding: 0.5rem 0;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      &:hover {
+        opacity: 0.95;
+      }
+    `};
 `;
 
 export const AddChannelInput = styled.input`

@@ -11,6 +11,7 @@ const gridDivStyle = {
   main: {
     display: "grid;",
     gridTemplateColumns: "1fr 4fr 10fr 4fr",
+    // gridTemplateColumns: "3vw 13vw 65vw 19vw",
     gridTemplateRows: "minmax(100vh, max-content)"
   }
 };
