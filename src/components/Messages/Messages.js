@@ -1,7 +1,8 @@
 import React from "react";
 import MessagesHeader from "./MessagesHeader";
 import MessageForm from "./MessageForm";
-import { Div, Grid, Img, Span, SearchInput } from "../Style";
+import { Div } from "../Style";
+import firebase from "../../firebase";
 
 // Styled Components
 const wrapperDivStyle = {
@@ -18,12 +19,20 @@ const wrapperDivStyle = {
 };
 
 class Messages extends React.Component {
+  state = {
+    messagesRef: firebase.database().ref("messages"),
+    user: this.props.user,
+    channel: this.props.channel
+  };
+
   render() {
+    const { messagesRef, user, channel } = this.state;
+
     return (
       <div>
         <MessagesHeader />
         <Div divStyles={wrapperDivStyle}>Messges</Div>
-        <MessageForm />
+        <MessageForm messagesRef={messagesRef} user={user} channel={channel} />
       </div>
     );
   }

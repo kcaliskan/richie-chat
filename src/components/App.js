@@ -18,12 +18,12 @@ const gridDivStyle = {
 
 class App extends React.Component {
   render() {
-    const { user } = this.props;
+    const { user, channel } = this.props;
     return (
       <Grid divStyles={gridDivStyle}>
         <ColorPanel />
-        <SidePanel user={user} />
-        <Messages />
+        <SidePanel user={user} key={user && user.uid} />
+        <Messages user={user} channel={channel} key={channel && channel.id} />
         <MetaPanel />
       </Grid>
     );
@@ -31,7 +31,10 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { user: state.user.currentUser };
+  return {
+    user: state.user.currentUser,
+    channel: state.channel.currentChannel
+  };
 };
 
 export default connect(mapStateToProps)(App);

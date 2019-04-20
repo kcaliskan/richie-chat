@@ -1,5 +1,6 @@
 import React from "react";
 import { Div, Grid, Img, WriteMessageInput, Span } from "../Style";
+import firebase from "../../firebase";
 
 // Styled Components
 const wrapperDivStyle = {
@@ -127,14 +128,35 @@ const messageInputStyle = {
   main: {
     width: "66.3vw",
     padding: "0.5rem 0.75rem",
-    borderRadius: "0 5px 5px 0"
+    borderRadius: "0 5px 5px 0",
+    boxShadow: "1px 1px #f0f0f0;",
+    border: "1px solid #ddd",
+    placeholderColor: "#c2c2c2",
+    velevele: "#c2c2c2"
+  }
+};
+
+const messageInputErrorStyle = {
+  main: {
+    width: "66.3vw",
+    padding: "0.5rem 0.75rem",
+    borderRadius: "0 5px 5px 0",
+    boxShadow: " 0 0 5px #e79494;",
+    backgroundColor: "#eeb4b4;",
+    border: "1px solid #e79494",
+    placeholderColor: "#FFFFFF",
+    velevele: "#c2c2c2"
+  },
+  error: {
+    placeholderColor: "#e79494",
+    velevele: "#c2c2c2"
   }
 };
 
 const messageInputIconWrapper = {
   main: {
-    width: "50px",
-    height: "50px",
+    width: "40px",
+    height: "40px",
     backgroundAll: "#e7e7e7 url('../../img/plus-grey-64.png')no-repeat center",
     backgroundSize: "24px 24px",
     borderRadius: "5px 0 0 5px",
@@ -150,28 +172,112 @@ const messageInputIconWrapper = {
 // End of Styled Components
 
 class MessageForm extends React.Component {
+  state = {
+    message: "",
+    messagesRef: this.props.messagesRef,
+    user: this.props.user,
+    channel: this.props.channel,
+    loading: false,
+    errors: []
+  };
+
+  messageInputHandler = event => {
+    this.setState({ [event.target.name]: event.target.value, errors: [] });
+  };
+
+  createMessage = () => {
+    const message = {
+      timestamp: firebase.database.ServerValue.TIMESTAMP,
+      content: this.state.message,
+      user: {
+        id: this.props.user.uid,
+        avatar: this.props.user.photoURL,
+        name: this.props.user.displayName
+      }
+    };
+
+    return message;
+  };
+
+  sendMessageHandler = event => {
+    const { message, messagesRef, user, channel } = this.state;
+    if (message) {
+      messagesRef
+        .child(this.state.channel.id)
+        .push()
+        .set(this.createMessage())
+        .then(() => {
+          this.setState({ loading: false, message: "", errors: [] });
+          console.log("yep oldu");
+        })
+        .catch(err => {
+          this.setState({
+            loading: false,
+            message: "",
+            errors: this.state.errors.concat(err)
+          });
+          console.log("noe" + err);
+        });
+    } else {
+      console.log("no message");
+      this.setState({
+        errors: this.state.errors.concat({ message: "Add a message" })
+      });
+    }
+  };
+
+  handleInputError = errors => {
+    return errors.some(error => error.message.toLowerCase().includes("add"));
+  };
+
+  loadingChecker = () => {
+    if (this.state.loading) {
+      return (
+        <Div divStyles={replyDivStyle}>
+          <Div divStyles={replyIconWrapperStyle}>
+            <Img
+              src={`../../img/reply-64.png`}
+              imgStyles={replyMessageIconStyle}
+            />
+          </Div>
+          <Span spanStyles={sendSpanStyle}>Send Message</Span>
+        </Div>
+      );
+    } else {
+      return (
+        <Div divStyles={replyDivStyle} onClick={this.sendMessageHandler}>
+          <Div divStyles={replyIconWrapperStyle}>
+            <Img
+              src={`../../img/reply-64.png`}
+              imgStyles={replyMessageIconStyle}
+            />
+          </Div>
+          <Span spanStyles={sendSpanStyle}>Send Message</Span>
+        </Div>
+      );
+    }
+  };
+
   render() {
     return (
       <Grid divStyles={wrapperDivStyle}>
         <Div divStyles={messageInputWrapperStyle}>
           <Div divStyles={messageInputIconWrapper} />
-
           <WriteMessageInput
             type="text"
-            inputStyles={messageInputStyle}
+            inputStyles={
+              this.state.errors.length > 0 && this.handleInputError
+                ? messageInputErrorStyle
+                : messageInputStyle
+            }
             placeholder="Write your message"
+            name="message"
+            value={this.state.message}
+            onChange={this.messageInputHandler}
           />
         </Div>
         <Div divStyles={messageButtonsDivStyle}>
-          <Div divStyles={replyDivStyle}>
-            <Div divStyles={replyIconWrapperStyle}>
-              <Img
-                src={`../../img/reply-64.png`}
-                imgStyles={replyMessageIconStyle}
-              />
-            </Div>
-            <Span spanStyles={sendSpanStyle}>Send Message</Span>
-          </Div>
+          {this.loadingChecker()}
           <Div divStyles={uploadDivStyle}>
             <Span spanStyles={uploadSpanStyle}>Upload Files</Span>
             <Div divStyles={uploadIconWrapperStyle}>

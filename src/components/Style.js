@@ -68,8 +68,8 @@ export const Img = styled.img`
     props.imgStyles ? props.imgStyles.main.boxShadow : ""};
   transition: ${props =>
     props.imgStyles ? props.imgStyles.main.transition : ""};
-    vertical-align: ${props =>
-      props.imgStyles ? props.imgStyles.main.verticalAlign : ""};
+  vertical-align: ${props =>
+    props.imgStyles ? props.imgStyles.main.verticalAlign : ""};
   &:hover {
     transform: ${props =>
       props.imgStyles ? props.imgStyles.main.transform : ""};
@@ -193,18 +193,17 @@ export const Div = styled.div`
     props.divStyles ? props.divStyles.main.overflowY : ""};
 
   &:hover {
-
     background-color: ${props =>
       props.divStyles ? props.divStyles.main.hoverBackground : ""};
-
 
     background: ${props =>
       props.divStyles ? props.divStyles.main.hoverBackgroundAll : ""};
 
-      background-size: ${props =>
-        props.divStyles ? props.divStyles.main.hoverBackgroundSize : ""};
+    background-size: ${props =>
+      props.divStyles ? props.divStyles.main.hoverBackgroundSize : ""};
   }
 
+  //eslint-disable-next-line no-use-before-define
   ${Div}:hover & {
     background: ${props =>
       props.divStyles ? props.divStyles.main.parentHoverBackground : ""};
@@ -328,34 +327,66 @@ export const WriteMessageInput = styled.input`
   // margin-left: auto;
 
   font-size: 14px;
-  box-shadow: 1px 1px #f0f0f0;
 
+  box-shadow: ${props =>
+    props.inputStyles ? props.inputStyles.main.boxShadow : ""};
+  background-color: ${props =>
+    props.inputStyles ? props.inputStyles.main.backgroundColor : "#FFFFFF"};
   &::-webkit-input-placeholder {
     color: #c2c2c2;
   }
   // border: 1px solid #ddd;
   width: ${props => (props.inputStyles ? props.inputStyles.main.width : "")};
-  border: ${props =>
-    props.inputStyles.error ? "1px solid #e79494" : "1px solid #ddd"};
+  border: ${props => (props.inputStyles ? props.inputStyles.main.border : "")};
+
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: ${props =>
+      props.inputStyles ? props.inputStyles.main.placeholderColor : ""};
+  }
 
   ${props =>
     props.inputStyles.error && css
       ? `
        
         &:focus {
-          border: 1px solid #e79494;
-          box-shadow: 0 0 5px #e79494;
+          // border: 1px solid #e79494;
+
+          border: 1px solid #ddd;
+
+          // box-shadow: 0 0 5px #e79494;
+
+          box-shadow: 1px 1px #f0f0f0;
+
+          background-color: #FFFFFF;
+          border-radius: 0 5px 5px 0;
+
           outline: none;
-          background-color: #eeb4b4;
+          // background-color: #eeb4b4;
+
+          &::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: ${props =>
+              props.inputStyles ? props.inputStyles.error.velevele : ""};
+            }
         }
 
         ,
-        &::-webkit-input-placeholder {
-          color: #fff;
+        &::-webkit-input-placeholder::focus {
+   
+     
+      
+           color: #c2c2c2;
+        },
+
+        ::placeholder {
+          /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: ${props =>
+            props.inputStyles ? props.inputStyles.main.placeholderColor : ""};
         }
 
         &:select {
-          border: 3px solid #c2c2c2;
+          // border: 3px solid #c2c2c2;
         }
       `
       : `
@@ -366,7 +397,7 @@ export const WriteMessageInput = styled.input`
       }
 
       &:select {
-        border: 3px solid #c2c2c2;
+        // border: 3px solid #c2c2c2;
       }
 
       &::-webkit-input-placeholder {
