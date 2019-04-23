@@ -37,6 +37,8 @@ export const P = styled.p`
 `;
 
 export const Img = styled.img`
+  padding: ${props => (props.imgStyles ? props.imgStyles.main.padding : "")};
+
   position: ${props => (props.imgStyles ? props.imgStyles.main.position : "")};
   top: ${props => (props.imgStyles ? props.imgStyles.main.top : "")};
   left: ${props => (props.imgStyles ? props.imgStyles.main.left : "")};
@@ -339,16 +341,10 @@ export const WriteMessageInput = styled.input`
   width: ${props => (props.inputStyles ? props.inputStyles.main.width : "")};
   border: ${props => (props.inputStyles ? props.inputStyles.main.border : "")};
 
-  ::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: ${props =>
-      props.inputStyles ? props.inputStyles.main.placeholderColor : ""};
-  }
-
   ${props =>
     props.inputStyles.error && css
       ? `
-       
+
         &:focus {
           // border: 1px solid #e79494;
 
@@ -364,26 +360,15 @@ export const WriteMessageInput = styled.input`
           outline: none;
           // background-color: #eeb4b4;
 
-          &::placeholder {
-            /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: ${props =>
-              props.inputStyles ? props.inputStyles.error.velevele : ""};
-            }
+          &::-webkit-input-placeholder {
+            color: #FFF;
+         }
         }
 
-        ,
-        &::-webkit-input-placeholder::focus {
-   
-     
-      
-           color: #c2c2c2;
-        },
+        &::-webkit-input-placeholder {
 
-        ::placeholder {
-          /* Chrome, Firefox, Opera, Safari 10.1+ */
-          color: ${props =>
-            props.inputStyles ? props.inputStyles.main.placeholderColor : ""};
-        }
+          color: #FFF;
+       }
 
         &:select {
           // border: 3px solid #c2c2c2;
@@ -394,6 +379,11 @@ export const WriteMessageInput = styled.input`
         // border: 1px solid #4285f4;
         // box-shadow: 0 0 5px #88d5e9;
         outline: none;
+        &::-webkit-input-placeholder::focus {
+
+          color: ${props =>
+            props.inputStyles ? props.inputStyles.main.velevele : ""};
+       }
       }
 
       &:select {
@@ -401,7 +391,8 @@ export const WriteMessageInput = styled.input`
       }
 
       &::-webkit-input-placeholder {
-        color: #c2c2c2;
+        color: color: ${props =>
+          props.inputStyles ? props.inputStyles.main.velevele : ""};
       }
       `};
 
@@ -592,7 +583,7 @@ export const SearchInput = styled.input`
   ${props =>
     props.inputStyles.error && css
       ? `
-       
+
         &:focus {
           border: 1px solid #e79494;
           box-shadow: 0 0 5px #e79494;

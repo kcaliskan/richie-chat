@@ -1,6 +1,7 @@
 import React from "react";
 import { Div, Grid, Img, WriteMessageInput, Span } from "../Style";
 import firebase from "../../firebase";
+import FileUploadModal from "./FileUploadModal";
 
 // Styled Components
 const wrapperDivStyle = {
@@ -52,12 +53,12 @@ const replyDivStyle = {
   main: {
     display: "flex",
     width: "35vw",
-    background: "#FBBC05",
+    background: "#34A853",
     borderRadius: "5px 0 0 5px",
-    border: "1px solid #d5a003",
+    border: "1px solid #2f994c",
     cursor: "pointer",
-    hoverBackground: "#fbc62b",
-    parentHoverBackground: "#e8af03"
+    hoverBackground: "#40c463",
+    parentHoverBackground: "#39b75a"
   }
 };
 
@@ -66,7 +67,7 @@ const replyIconWrapperStyle = {
     // padding: "0.4rem 0.35rem",
     width: "30px",
     height: "30px",
-    background: "#d5a003",
+    background: "#2f994c",
     position: "relative"
   }
 };
@@ -178,7 +179,8 @@ class MessageForm extends React.Component {
     user: this.props.user,
     channel: this.props.channel,
     loading: false,
-    errors: []
+    errors: [],
+    showFileUploadModal: false
   };
 
   messageInputHandler = event => {
@@ -199,6 +201,11 @@ class MessageForm extends React.Component {
     return message;
   };
 
+  enterKeyHandler = event => {
+    if (event.key === "Enter") {
+      this.sendMessageHandler(event);
+    }
+  };
   sendMessageHandler = event => {
     const { message, messagesRef, user, channel } = this.state;
     if (message) {
@@ -208,7 +215,6 @@ class MessageForm extends React.Component {
         .set(this.createMessage())
         .then(() => {
           this.setState({ loading: false, message: "", errors: [] });
-          console.log("yep oldu");
         })
         .catch(err => {
           this.setState({
@@ -216,10 +222,8 @@ class MessageForm extends React.Component {
             message: "",
             errors: this.state.errors.concat(err)
           });
-          console.log("noe" + err);
         });
     } else {
-      console.log("no message");
       this.setState({
         errors: this.state.errors.concat({ message: "Add a message" })
       });
@@ -258,9 +262,18 @@ class MessageForm extends React.Component {
     }
   };
 
+  fileUploadModalHandler = () => {
+    this.setState({ showFileUploadModal: true });
+  };
+
+  closeFileUploadModalHandler = () => {
+    this.setState({ showFileUploadModal: false });
+  };
+
   render() {
     return (
       <Grid divStyles={wrapperDivStyle}>
+        {this.state.showFileUploadModal ? <FileUploadModal /> : ""}
         <Div divStyles={messageInputWrapperStyle}>
           <Div divStyles={messageInputIconWrapper} />
           <WriteMessageInput
@@ -274,12 +287,18 @@ class MessageForm extends React.Component {
             name="message"
             value={this.state.message}
             onChange={this.messageInputHandler}
+            onKeyDown={this.enterKeyHandler}
           />
         </Div>
         <Div divStyles={messageButtonsDivStyle}>
           {this.loadingChecker()}
           <Div divStyles={uploadDivStyle}>
-            <Span spanStyles={uploadSpanStyle}>Upload Files</Span>
+            <Span
+              spanStyles={uploadSpanStyle}
+              onClick={this.fileUploadModalHandler}
+            >
+              Upload Files
+            </Span>
             <Div divStyles={uploadIconWrapperStyle}>
               <Img
                 src={`../../img/upload-64.png`}
