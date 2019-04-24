@@ -490,6 +490,81 @@ export const AddChannelInput = styled.input`
     `};
 `;
 
+export const FileUploadInput = styled.input`
+  width: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.width : ""};
+  max-width: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.maxWidth : ""};
+  min-width: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.minWidth : ""};
+  height: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.height : ""};
+  border-radius: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.borderRadius : ""};
+  display: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.display : ""};
+  padding: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.padding : ""};
+  font-size: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.fontSize : ""};
+  border: ${props =>
+    props.inputStyles.main ? props.inputStyles.main.border : ""};
+
+  &::-webkit-input-placeholder {
+    color: #c2c2c2;
+  }
+
+  ${props =>
+    props.inputStyles.error && css
+      ? `
+        background-color: #eeb4b4;
+        border: 1px solid #e79494;
+        &:focus {
+          border: 1px solid #e79494;
+          box-shadow: 0 0 5px #e79494;
+          outline: none;
+          background-color: #eeb4b4;
+        }
+
+        ,
+        &::-webkit-input-placeholder {
+          color: #fff;
+        }
+
+        &:select {
+          border: 3px solid #c2c2c2;
+        }
+      `
+      : `
+        background-color: #FFFFFF;
+      &:focus {
+        border: 1px solid #4285f4;
+        box-shadow: 0 0 8px #88d5e9;
+        outline: none;
+      }
+
+      &:select {
+        border: 3px solid #c2c2c2;
+      }
+
+      &::-webkit-input-placeholder {
+        color: #c2c2c2;
+      }
+      `};
+
+  ${props =>
+    props.marginbottom &&
+    css`
+      margin-bottom: 0.5rem;
+    `};
+
+  ${props =>
+    props.marginbottom1 &&
+    css`
+      margin-bottom: 1rem;
+    `};
+`;
+
 export const Input = styled.input`
   border-radius: ${props => (props.inputStyles ? "5px" : "5px")};
   padding: 0.75rem 0.75rem;
